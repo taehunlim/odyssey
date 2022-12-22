@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Input from "../Input";
+import List from "../List";
 
 import "./style.css";
 
 function Filter() {
+  const [isShow, setIsShow] = useState(false);
   return (
     <div className="filter">
       <p>상품검색</p>
@@ -14,10 +16,13 @@ function Filter() {
       <div className="filter-container">
         <div className="filter-wrapper">
           <span>검색</span>
-          <div className="filter-inputs">
-            <Input />
+          <div className="filter-inputs" style={{ position: "relative" }}>
+            <List show={isShow}>ss</List>
 
-            <Input onChange={(e) => console.log(e.target.value)} />
+            <Input
+              onClick={() => setIsShow(!isShow)}
+              onChange={(e) => console.log(e.target.value)}
+            />
           </div>
         </div>
 
