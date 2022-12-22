@@ -1,0 +1,55 @@
+.filter {
+  background-color: #ffffff;
+  padding: 20px 0 10px;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+}
+
+.filter > p {
+  margin: 0 0 15px 0;
+  padding: 0 20px;
+  font-weight: 700;
+}
+
+.filter-container {
+  display: flex;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.filter-wrapper {
+  display: grid;
+  grid-template-columns: 150px auto;
+
+  align-items: center;
+  font-weight: 700;
+
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.filter-inputs {
+  display: flex;
+  gap: 20px;
+}
+
+.filter-button {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 12px;
+  width: 80px;
+  height: 41px;
+
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 5px;
+  border: 0.1px solid transparent;
+  cursor: pointer;
+}
+
+.separator {
+  height: 1px;
+  background-color: #dedede;
+  margin-bottom: 10px;
+}
