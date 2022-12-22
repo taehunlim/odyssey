@@ -1,5 +1,7 @@
 import React from "react";
 
+import Input from "../Input";
+
 import "./style.css";
 
 function Filter() {
@@ -13,9 +15,9 @@ function Filter() {
         <div className="filter-wrapper">
           <span>검색</span>
           <div className="filter-inputs">
-            <input />
+            <Input />
 
-            <input />
+            <Input onChange={(e) => console.log(e.target.value)} />
           </div>
         </div>
 
