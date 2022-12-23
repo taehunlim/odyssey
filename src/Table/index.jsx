@@ -16,7 +16,11 @@ function Table({ columns, data }) {
         <thead className="table-head">
           <tr role="row">
             {columns.map((column) => (
-              <th key={column.accessor} role="columnheader">
+              <th
+                width={column.width}
+                key={column.accessor}
+                role="columnheader"
+              >
                 {column.header}
               </th>
             ))}
