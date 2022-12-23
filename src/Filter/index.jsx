@@ -6,17 +6,20 @@ import Select from "../Select";
 import "./style.css";
 
 export const lists = [
-  { name: "제목", value: "linkUrlTitle" },
-  { name: "내용", value: "description" },
-  { name: "폴더명", value: "folderName" },
+  { name: "전체", value: "" },
+  { name: "상품명", value: "title" },
+  { name: "브랜드", value: "brand" },
+  { name: "상품내용", value: "description" },
 ];
 
-function Filter() {
+function Filter({ onSearch }) {
   const [isShow, setIsShow] = useState(false);
+
   const [selectedData, setSelectedData] = useState({
-    name: "",
+    name: "전체",
     value: "",
   });
+  const [description, setDescription] = useState("");
 
   return (
     <div className="filter">
@@ -34,17 +37,27 @@ function Filter() {
                 setSelectedData(e);
               }}
               value={selectedData.name}
-              defaultValue=""
+              defaultValue="전체"
             />
 
             <Input
               onClick={() => setIsShow(!isShow)}
-              onChange={(e) => console.log(e.target.value)}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </div>
         </div>
 
-        <button className="filter-button">검색</button>
+        <button
+          className="filter-button"
+          onClick={() => {
+            onSearch({
+              select: selectedData.value,
+              input: description,
+            });
+          }}
+        >
+          검색
+        </button>
       </div>
     </div>
   );
