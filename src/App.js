@@ -9,6 +9,8 @@ import { getCookie, setCookie, trimText } from "./utills";
 
 import { columns } from "./columns";
 
+import "./App.css";
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -100,7 +102,7 @@ function App() {
   if (isError) return <span>Error: {error.message}</span>;
 
   return (
-    <div style={{ backgroundColor: "#f8f8f8", height: "100vh" }}>
+    <div className="app">
       {!isLoading && <Filter onSearch={handleSubmit} defaultValue={searched} />}
       {productData && <Table columns={columns} data={slicedData} />}
       <Pagination
