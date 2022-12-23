@@ -12,14 +12,16 @@ export const lists = [
   { name: "상품내용", value: "description" },
 ];
 
-function Filter({ onSearch }) {
+function Filter({ onSearch, defaultValue }) {
+  const { select, input } = defaultValue;
+
   const [isShow, setIsShow] = useState(false);
 
   const [selectedData, setSelectedData] = useState({
-    name: "전체",
-    value: "",
+    name: select.name || "전체",
+    value: select.value || "",
   });
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(input || "");
 
   return (
     <div className="filter">
@@ -30,7 +32,7 @@ function Filter({ onSearch }) {
       <div className="filter-container">
         <div className="filter-wrapper">
           <span>검색</span>
-          <div className="filter-inputs" style={{ position: "relative" }}>
+          <div className="filter-inputs">
             <Select
               lists={lists}
               onSelectChange={(e) => {
@@ -43,6 +45,7 @@ function Filter({ onSearch }) {
             <Input
               onClick={() => setIsShow(!isShow)}
               onChange={(e) => setDescription(e.target.value)}
+              value={description}
             />
           </div>
         </div>
@@ -51,7 +54,7 @@ function Filter({ onSearch }) {
           className="filter-button"
           onClick={() => {
             onSearch({
-              select: selectedData.value,
+              select: selectedData,
               input: description,
             });
           }}
