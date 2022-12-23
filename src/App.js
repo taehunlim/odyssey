@@ -50,12 +50,17 @@ function App() {
       return all;
     });
 
-    if (data) {
-      setCookie("searched", JSON.stringify(searched), 1);
-    }
-
     return filtered;
   }, [data?.products, input, select.value]);
+
+  const slicedData = useMemo(() => {
+    if (productData) {
+      setCookie("searched", JSON.stringify(searched), 1);
+      setCookie("page", page, 0.1);
+    }
+
+    return productData?.slice((page - 1) * limit, page * limit);
+  }, [productData, page, input, select.value, limit]);
 
   useEffect(() => {
     const searchedCookie = JSON.parse(getCookie("searched"));
@@ -68,25 +73,30 @@ function App() {
     if (pageCookie) {
       setPage(pageCookie);
     }
+
     setIsLoading(false);
   }, []);
 
-  function handlePage(e) {
-    setPage(e);
-    setCookie("page", e, 0.1);
+  function handleSubmit(e) {
+    const { select: s, input: i } = e;
+    setSearched(e);
+
+    if (s.value !== select.value || i !== input) {
+      setPage(1);
+    }
   }
 
   if (isError) return <span>Error: {error.message}</span>;
 
   return (
     <div style={{ backgroundColor: "#f8f8f8", height: "100vh" }}>
-      {!isLoading && <Filter onSearch={setSearched} defaultValue={searched} />}
-      {productData && <Table columns={columns} data={productData} />}
+      {!isLoading && <Filter onSearch={handleSubmit} defaultValue={searched} />}
+      {productData && <Table columns={columns} data={slicedData} />}
       <Pagination
         total={productData?.length}
         limit={limit}
         page={page}
-        setPage={handlePage}
+        setPage={setPage}
       />
     </div>
   );
