@@ -1,0 +1,30 @@
+.select {
+  width: 220px;
+  position: relative;
+  display: inline-flex;
+}
+
+.select-box {
+  position: relative;
+}
+
+.select-box input {
+  padding-right: 24px;
+}
+
+.select-icon {
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  right: 0;
+
+  transition: 0.3s;
+}
+
+.select-icon.active {
+  transform: rotate(180deg);
+}

@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 
 import Input from "../Input";
-import List from "../List";
+import Select from "../Select";
 
 import "./style.css";
 
+export const lists = [
+  { name: "제목", value: "linkUrlTitle" },
+  { name: "내용", value: "description" },
+  { name: "폴더명", value: "folderName" },
+];
+
 function Filter() {
   const [isShow, setIsShow] = useState(false);
+  const [selectedData, setSelectedData] = useState({
+    name: "",
+    value: "",
+  });
+
   return (
     <div className="filter">
       <p>상품검색</p>
@@ -17,7 +28,14 @@ function Filter() {
         <div className="filter-wrapper">
           <span>검색</span>
           <div className="filter-inputs" style={{ position: "relative" }}>
-            <List show={isShow}>ss</List>
+            <Select
+              lists={lists}
+              onSelectChange={(e) => {
+                setSelectedData(e);
+              }}
+              value={selectedData.name}
+              defaultValue=""
+            />
 
             <Input
               onClick={() => setIsShow(!isShow)}
