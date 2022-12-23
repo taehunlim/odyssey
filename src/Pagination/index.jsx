@@ -1,13 +1,32 @@
 import React from "react";
+
+import Select from "../Select";
+
 import "./style.css";
 
-function Pagination({ total, limit, page, setPage }) {
+const lists = [
+  { name: "10", value: 10 },
+  { name: "20", value: 20 },
+  { name: "50", value: 50 },
+];
+
+function Pagination({ total, limit, page, setPage, setLimit }) {
   const numPages = Math.ceil(total / limit);
   const startNumber = Math.floor((page - 1) / 10) * 10 + 1;
   const pageList = Array(10).fill(startNumber);
 
   return (
-    <div>
+    <div className="pagination-wrapper">
+      <div>
+        <span>페이지당 행: </span>
+        <Select
+          lists={lists}
+          onSelectChange={(e) => setLimit(e.value)}
+          value={limit}
+          defaultValue="10"
+        />
+      </div>
+
       <nav className="pagination">
         <button
           className="pagination-button arrow"

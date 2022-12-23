@@ -55,8 +55,9 @@ function App() {
 
   const slicedData = useMemo(() => {
     if (productData) {
-      setCookie("searched", JSON.stringify(searched), 1);
+      setCookie("searched", JSON.stringify(searched), 0.1);
       setCookie("page", page, 0.1);
+      setCookie("limit", limit, 0.1);
     }
 
     return productData?.slice((page - 1) * limit, page * limit);
@@ -65,6 +66,7 @@ function App() {
   useEffect(() => {
     const searchedCookie = JSON.parse(getCookie("searched"));
     const pageCookie = JSON.parse(getCookie("page"));
+    const limitCookie = JSON.parse(getCookie("limit"));
 
     if (searchedCookie) {
       setSearched(searchedCookie);
@@ -72,6 +74,10 @@ function App() {
 
     if (pageCookie) {
       setPage(pageCookie);
+    }
+
+    if (limitCookie) {
+      setLimit(limitCookie);
     }
 
     setIsLoading(false);
@@ -86,6 +92,11 @@ function App() {
     }
   }
 
+  function handleLimit(e) {
+    setLimit(e);
+    setPage(1);
+  }
+
   if (isError) return <span>Error: {error.message}</span>;
 
   return (
@@ -95,6 +106,7 @@ function App() {
       <Pagination
         total={productData?.length}
         limit={limit}
+        setLimit={handleLimit}
         page={page}
         setPage={setPage}
       />
