@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import Filter from "./Filter";
 import Table from "./Table";
+import Pagination from "./Pagination";
 
 import { getCookie, setCookie, trimText } from "./utills";
 
@@ -10,6 +11,8 @@ import { columns } from "./columns";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
   const [searched, setSearched] = useState({
     select: {
       name: "",
@@ -55,12 +58,23 @@ function App() {
   }, [data?.products, input, select.value]);
 
   useEffect(() => {
-    const searched = JSON.parse(getCookie("searched"));
-    if (searched) {
-      setSearched(searched);
+    const searchedCookie = JSON.parse(getCookie("searched"));
+    const pageCookie = JSON.parse(getCookie("page"));
+
+    if (searchedCookie) {
+      setSearched(searchedCookie);
+    }
+
+    if (pageCookie) {
+      setPage(pageCookie);
     }
     setIsLoading(false);
   }, []);
+
+  function handlePage(e) {
+    setPage(e);
+    setCookie("page", e, 0.1);
+  }
 
   if (isError) return <span>Error: {error.message}</span>;
 
@@ -68,6 +82,12 @@ function App() {
     <div style={{ backgroundColor: "#f8f8f8", height: "100vh" }}>
       {!isLoading && <Filter onSearch={setSearched} defaultValue={searched} />}
       {productData && <Table columns={columns} data={productData} />}
+      <Pagination
+        total={productData?.length}
+        limit={limit}
+        page={page}
+        setPage={handlePage}
+      />
     </div>
   );
 }
